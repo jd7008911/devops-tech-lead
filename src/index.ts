@@ -6,7 +6,9 @@ import rateLimit from 'express-rate-limit';
 import logger from './lib/logger';
 import { connectPostgres, getPool } from './lib/postgres';
 import { connectRedis, getRedis } from './lib/redis';
+import { runMigrations } from './db/migrations';
 import healthRouter from './routes/health';
+import ordersRouter from './routes/orders';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
@@ -28,6 +30,7 @@ app.use(limiter);
 
 // Routes
 app.use('/health', healthRouter);
+app.use('/orders', ordersRouter);
 
 app.get('/', (_req, res) => {
   res.json({ message: 'DevOps Tech Lead API', version: '1.0.0' });
@@ -61,6 +64,7 @@ async function start(): Promise<void> {
   try {
     await connectPostgres();
     await connectRedis();
+    await runMigrations();
 
     app.listen(PORT, '0.0.0.0', () => {
       logger.info(`Server running on port ${PORT}`);
