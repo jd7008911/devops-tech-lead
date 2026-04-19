@@ -4,7 +4,6 @@ import express from 'express';
 // Mock postgres and redis before importing routes
 const mockQuery = jest.fn();
 const mockConnect = jest.fn();
-const mockRelease = jest.fn();
 const mockRedisGet = jest.fn();
 const mockRedisSet = jest.fn();
 const mockRedisDel = jest.fn();
