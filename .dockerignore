@@ -1,0 +1,11 @@
+node_modules
+dist
+npm-debug.log*
+.env
+.env.*
+.git
+.github
+.vscode
+*.md
+coverage
+k8s
